@@ -1,0 +1,113 @@
+.dashboard-content {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  .form-holder {
+    width: 600px;
+    padding: 16px 21px;   
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+    .title {
+      font-weight: bold;
+      font-size: 20px;
+      margin-bottom: 16px;
+    }
+    .item-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: #9e9e9e;
+      font-weight: 500;
+      margin-left: 4px;
+      margin-bottom: 8px;
+    }
+    .type-tabs {
+      display: flex;
+      align-items: center;
+      padding: 0;
+      margin: 0;
+      border-radius: 10px;
+      border: 1px solid #0091ea50;
+      overflow: hidden;
+      box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+      li {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex: 1;
+        border-right: 1px solid #0091ea50;
+        padding: 12px 14px 12px 16px;
+        gap: 8px;
+        color: #9e9e9e;
+        cursor: pointer;
+        transition: all 0.2s;
+        &:hover {
+          color: #757575;
+        }
+        &[data-active=true] {
+          background: #0091ea05;
+          color: #0091ea;
+        }
+        .label {
+          font-weight: 500;
+          font-size: 14px;
+        }
+        .chip {
+          border-radius: 12px;
+          background: #0091ea15;
+          padding: 1px 8px;
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          font-weight: 500;
+          color: #0091ea90;
+        }
+      }
+    }
+  }
+  textarea, input {
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #424242;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+    &:focus {
+      outline: none;
+      border: 1px solid #0091ea50;
+    }
+  }
+  .text-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .update-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 16px;
+    border-radius: 10px;
+    background: #0091ea;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+    color: white;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    transition: all 0.2s;
+    &[data-disabled=true] {
+      background: #0091ea50;
+      color: #e0e0e0;
+      cursor: not-allowed;
+    }
+    &:hover {
+      background: #0069ea;
+    }
+  }
+}

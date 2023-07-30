@@ -1,0 +1,44 @@
+.main-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  inset: 0;
+  .data-holder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: 10px;
+    border-radius: 10px;
+    overflow: hidden;
+    &[data-webview=true] {
+      background: white;
+    }
+    .text-holder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      max-width: 50%;
+      gap: 24px;
+      .title-text {
+        display: flex;
+        font-size: 60px;
+        line-height: 110%;
+        letter-spacing: -1px;
+        font-weight: 500;
+      }
+      .subtitle-text {
+        display: flex;
+        font-size: 28px;
+        font-weight: 200;
+        color: #e0e0e0;
+      }
+    }
+  }  
+}
