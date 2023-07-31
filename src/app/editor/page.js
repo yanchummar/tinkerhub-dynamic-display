@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 import { initializeApp } from 'firebase/app'
 import { getDatabase, ref, onValue, update } from "firebase/database";
@@ -22,6 +23,7 @@ const database = getDatabase(app)
 
 export default function Home() {
 
+  const router = useRouter()
   const [liveData, setLiveData] = useState({})
   const [active, setActive] = useState('text')
   const [title, setTitle] = useState('')
@@ -32,6 +34,8 @@ export default function Home() {
   const primaryRef = ref(database, 'primary')
 
   useEffect(() => {
+    handleLogin()
+
     onValue(primaryRef, (snapshot) => {
       const data = snapshot.val()
       console.log(data)
@@ -42,6 +46,20 @@ export default function Home() {
       setActive(data?.live)
     })
   }, [])
+
+  const handleLogin = () => {
+    const password = prompt('Enter your password:');
+
+    // Replace the following lines with your authentication logic
+    const validPassword = 'tinkerspace123';
+
+    if (password === validPassword) {
+      console.log('logged in')
+    } else {
+      console.log('not logged in')
+      router.replace('/nop');
+    }
+  };
 
   const updateData = () => {
     setIsUpdating(true)
