@@ -12,7 +12,10 @@
     align-items: center;
     justify-content: center;
     position: absolute;
-    inset: 10px;
+    top: 10px;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
     border-radius: 10px;
     overflow: hidden;
     &[data-webview=true] {
@@ -25,7 +28,7 @@
       justify-content: center;
       text-align: center;
       color: white;
-      max-width: 80%;
+      max-width: 50%;
       gap: 24px;
       .title-text {
         display: flex;
