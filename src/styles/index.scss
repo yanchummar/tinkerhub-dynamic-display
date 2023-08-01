@@ -31,7 +31,6 @@
       text-align: center;
       color: white;
       max-width: 75%;
-      gap: 200px;
       .title-text {
         display: flex;
         font-size: 80px;
@@ -40,6 +39,7 @@
         font-weight: 500;
       }
       .subtitle-text {
+        margin-top: 40px;
         display: flex;
         font-size: 48px;
         font-weight: 200;
