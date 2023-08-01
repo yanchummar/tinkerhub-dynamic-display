@@ -34,7 +34,7 @@ export default function Home() {
   const primaryRef = ref(database, 'primary')
 
   useEffect(() => {
-    handleLogin()
+    // handleLogin()
 
     onValue(primaryRef, (snapshot) => {
       const data = snapshot.val()

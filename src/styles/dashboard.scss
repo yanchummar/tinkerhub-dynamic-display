@@ -111,3 +111,36 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .dashboard-content {
+    justify-content: flex-start;
+    .form-holder {
+      border: none;
+      box-shadow: none;
+      width: 100%;
+      padding: 24px 18px;
+      border-radius: 0;   
+      .title {
+        font-size: 18px;
+      }
+      .item-label {
+        font-size: 12px;
+      }
+      textarea, input {
+        height: 150px;
+      }
+      .type-tabs {
+        li {
+          padding: 12px 14px 12px 16px;
+          .label {
+            font-size: 12px;
+          }
+          .chip {
+            font-size: 10px;
+          }
+        }
+      }
+    }
+  }
+}
