@@ -1,10 +1,12 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useRouter } from 'next/navigation'
 
 import { initializeApp } from 'firebase/app'
-import { getDatabase, ref, onValue, update } from "firebase/database";
+import { getDatabase, onValue, update, ref as dbRef } from "firebase/database";
+
+import { getStorage, uploadBytes, getDownloadURL, ref as storageRef } from "firebase/storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDnQRXHWHOWVA_5Y8JJn7TEIVEnno8cQic",
@@ -21,17 +23,26 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
 
+// Create a root reference
+const storage = getStorage(app)
+
 export default function Home() {
+
+  const imageInputRef = useRef(null);
 
   const router = useRouter()
   const [liveData, setLiveData] = useState({})
   const [active, setActive] = useState('text')
   const [title, setTitle] = useState('')
   const [subtitle, setSubtitle] = useState('')
+  const [imageUrl, setImageUrl] = useState('')
+  const [image, setImage] = useState(undefined)
   const [link, setLink] = useState('')
   const [isUpdating, setIsUpdating] = useState(false)
+  const [imagePreview, setImagePreview] = useState(undefined)
 
-  const primaryRef = ref(database, 'primary')
+  const primaryRef = dbRef(database, 'primary')
+  const tvImageRef = storageRef(storage, 'images/tv.jpg')
 
   useEffect(() => {
     // handleLogin()
@@ -44,6 +55,7 @@ export default function Home() {
       setSubtitle(data?.subtitle)
       setLink(data?.link)
       setActive(data?.live)
+      setImageUrl(data?.image)
     })
   }, [])
 
@@ -61,21 +73,60 @@ export default function Home() {
     }
   };
 
-  const updateData = () => {
+  const handleImageInputClick = () => {
+    imageInputRef.current.click()
+  }
+
+  const onImageInput = (e) => {
+    const file = e.target.files[0]
+    setImage(file)
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      setImagePreview(undefined);
+    }
+  }
+
+  const updateData = (image) => {
     setIsUpdating(true)
     const updates = {}
+    console.log(image)
     updates[`primary/live`] = active
     updates[`primary/title`] = title
     updates[`primary/subtitle`] = subtitle
     updates[`primary/link`] = link
+    updates[`primary/image`] = image ? image : imageUrl
 
-    update(ref(database), updates)
+    update(dbRef(database), updates)
     .then(() => {
       setIsUpdating(false)
     })
     .catch((error) => { 
       setIsUpdating(false)
     })
+  }
+
+  const uploadImage = () => {
+    setIsUpdating(true)
+    uploadBytes(tvImageRef, image).then((snapshot) => {
+      console.log(snapshot)
+      getDownloadURL(snapshot.ref).then((downloadURL) => {
+        setImagePreview(undefined)
+        updateData(downloadURL)
+      })
+    })
+  }
+
+  const onUpdateClick = () => {
+    if (active === 'image') {
+      uploadImage()
+    } else {
+      updateData()
+    }
   }
 
   return (
@@ -90,6 +141,16 @@ export default function Home() {
             <span className='label'>Text</span>
             {
               liveData?.live === 'text' ? (
+                <span className='chip'>active</span>
+              ) : false
+            }
+          </li>
+          <li 
+            onClick={() => setActive('image')}
+            data-active={active === 'image'}>
+            <span className='label'>Image</span>
+            {
+              liveData?.live === 'image' ? (
                 <span className='chip'>active</span>
               ) : false
             }
@@ -124,10 +185,30 @@ export default function Home() {
               value={link}
               onChange={(e) => setLink(e.target.value)}
               type='url' placeholder='Enter URL' />
-          ) : false
+          ) : active === 'image' ? (
+              <div className='image-holder'>
+                {
+                  imagePreview || imageUrl !== '' ? (
+                    <img 
+                      className='image-preview'
+                      src={imagePreview ? imagePreview : imageUrl} 
+                      alt="Preview" />
+                  ) : false
+                }
+                <div 
+                  onClick={handleImageInputClick}
+                  className='image-input'>
+                  <input 
+                    ref={imageInputRef} 
+                    className='file-input' type="file" accept="image/*"
+                    onInput={onImageInput}></input>
+                  <span className='upload-text'>{imagePreview || imageUrl !== '' ? 'Replace Image' : 'Upload an Image'}</span>
+                </div>
+              </div>
+            ) : false
         }
         <button 
-          onClick={updateData}
+          onClick={onUpdateClick}
           className='update-btn'
           data-disabled={isUpdating}>
           <span className='label'>{ isUpdating ? 'Updating...' : 'Update'}</span>

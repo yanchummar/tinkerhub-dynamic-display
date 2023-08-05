@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 
 export default function BackgroundGradient(props) {
 
-  const { isWebView } = props
+  const { isWebView, isImageView } = props
 
   useEffect(() => {
     var gradient = new Gradient()
@@ -16,7 +16,7 @@ export default function BackgroundGradient(props) {
   return (
     <>
       <Script src="/gradient.js" strategy="beforeInteractive"></Script>
-      <canvas id="gradient-canvas" data-faded={isWebView}></canvas>
+      <canvas id="gradient-canvas" data-faded={isWebView} data-hidden={isImageView}></canvas>
     </>
   )
 

@@ -84,6 +84,44 @@
       border: 1px solid #0091ea50;
     }
   }
+  .image-holder {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    user-select: none;
+    .image-preview {
+      max-height: 300px;
+      object-fit: contain;
+    }
+  }
+  .image-input {
+    display: flex;
+    height: 70px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    border: 2px dashed #0091ea20;
+    background: #0091ea05;
+    color: #0091ea90;
+    transition: all 0.2s;
+    cursor: pointer;
+    &:hover {
+      border-color:#0091ea40;
+      background: #0091ea10;
+      color: #0091ea;
+    }
+    .file-input {
+      padding: 0;
+      border: none;
+      border-radius: 0;
+      display: none;
+    }
+    .upload-text {
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
   .text-inputs {
     display: flex;
     flex-direction: column;

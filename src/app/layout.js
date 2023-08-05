@@ -1,6 +1,6 @@
 import '../styles/globals.scss'
 import '../styles/index.scss'
-import '../styles/dashboard.scss'
+import '../styles/editor.scss'
 import '../styles/components/BackgroundGradient.scss'
 
 export const metadata = {

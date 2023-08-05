@@ -24,7 +24,7 @@ const database = getDatabase(app)
 export default function Home() {
 
   const [isWebView, setIsWebView] = useState(false)
-  const [liveData, setLiveData] = useState({})
+  const [liveData, setLiveData] = useState(undefined)
 
   const primaryRef = ref(database, 'primary')
 
@@ -38,11 +38,15 @@ export default function Home() {
 
   return (
     <main className='main-content'>
-      <BackgroundGradient isWebView={liveData?.live === 'web'} />
+      <BackgroundGradient 
+        isImageView={liveData?.live === 'image'}
+        isWebView={liveData?.live === 'web'} />
       <div className='data-holder' data-webview={liveData?.live === 'web'}>
         {
           liveData?.live === 'web' ? (
-            <iframe src={liveData?.link} className='webview w-full h-full absolute inset-0' />
+            <iframe src={liveData?.link} className='webview w-full h-full absolute' />
+          ) : liveData?.live === 'image' ? (
+            <img src={liveData?.image} className='w-full h-full fixed object-contain' />
           ) : (
             <div className='text-holder'>
               <span className='title-text'>{liveData?.title}</span>
