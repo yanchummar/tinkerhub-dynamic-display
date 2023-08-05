@@ -1,7 +1,7 @@
 'use client'
 
 import BackgroundGradient from '@/components/BackgroundGradient'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 import { initializeApp } from 'firebase/app'
 import { getDatabase, ref, onValue } from "firebase/database";
@@ -17,11 +17,15 @@ const firebaseConfig = {
   measurementId: "G-YYTFBDLZ6T"
 }
 
+const announcementAudio = '/assets/audio/annoucement.mp3'
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
 
 export default function Home() {
+
+  const audioRef = useRef(null)
 
   const [isWebView, setIsWebView] = useState(false)
   const [liveData, setLiveData] = useState(undefined)
@@ -30,9 +34,10 @@ export default function Home() {
 
   useEffect(() => {
     onValue(primaryRef, (snapshot) => {
-      const data = snapshot.val();
+      const data = snapshot.val()
       console.log(data)
-      setLiveData(data);
+      setLiveData(data)
+      audioRef.current.play()
     });
   }, [])
 
@@ -55,6 +60,12 @@ export default function Home() {
           )
         }
       </div>
+      <audio
+        style={{display: 'none'}}
+        ref={audioRef} controls>
+        <source src={announcementAudio} type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
     </main>
   )
 }
