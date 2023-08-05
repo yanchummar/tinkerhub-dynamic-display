@@ -37,7 +37,9 @@ export default function Home() {
       const data = snapshot.val()
       console.log(data)
       setLiveData(data)
-      audioRef.current.play()
+      if (data?.announce) {
+        audioRef.current.play()
+      }
     });
   }, [])
 

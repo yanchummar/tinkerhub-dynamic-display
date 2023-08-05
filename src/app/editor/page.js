@@ -40,12 +40,13 @@ export default function Home() {
   const [link, setLink] = useState('')
   const [isUpdating, setIsUpdating] = useState(false)
   const [imagePreview, setImagePreview] = useState(undefined)
+  const [shouldAnnounce, setShouldAnnounce] = useState(false)
 
   const primaryRef = dbRef(database, 'primary')
   const tvImageRef = storageRef(storage, 'images/tv.jpg')
 
   useEffect(() => {
-    handleLogin()
+    // handleLogin()
 
     onValue(primaryRef, (snapshot) => {
       const data = snapshot.val()
@@ -56,6 +57,7 @@ export default function Home() {
       setLink(data?.link)
       setActive(data?.live)
       setImageUrl(data?.image)
+      setShouldAnnounce(data?.announce)
     })
   }, [])
 
@@ -100,6 +102,7 @@ export default function Home() {
     updates[`primary/subtitle`] = subtitle
     updates[`primary/link`] = link
     updates[`primary/image`] = image ? image : imageUrl
+    updates[`primary/announce`] = shouldAnnounce
 
     update(dbRef(database), updates)
     .then(() => {
@@ -211,6 +214,16 @@ export default function Home() {
               </div>
             ) : false
         }
+        <div
+          onClick={() => setShouldAnnounce(!shouldAnnounce)} 
+          className='checkbox-holder'>
+          <div 
+            className='tickbox'
+            data-checked={shouldAnnounce}>
+            <div className='check-icon'></div>
+          </div>
+          <span className='label'>Announce with Sound</span>
+        </div>
         <button 
           onClick={onUpdateClick}
           className='update-btn'
