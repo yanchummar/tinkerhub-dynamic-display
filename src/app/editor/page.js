@@ -45,7 +45,7 @@ export default function Home() {
   const tvImageRef = storageRef(storage, 'images/tv.jpg')
 
   useEffect(() => {
-    // handleLogin()
+    handleLogin()
 
     onValue(primaryRef, (snapshot) => {
       const data = snapshot.val()
