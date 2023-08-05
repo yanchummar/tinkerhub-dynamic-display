@@ -112,13 +112,17 @@ export default function Home() {
 
   const uploadImage = () => {
     setIsUpdating(true)
-    uploadBytes(tvImageRef, image).then((snapshot) => {
-      console.log(snapshot)
-      getDownloadURL(snapshot.ref).then((downloadURL) => {
-        setImagePreview(undefined)
-        updateData(downloadURL)
+    if (image) {
+      uploadBytes(tvImageRef, image).then((snapshot) => {
+        console.log(snapshot)
+        getDownloadURL(snapshot.ref).then((downloadURL) => {
+          setImagePreview(undefined)
+          updateData(downloadURL)
+        })
       })
-    })
+    } else {
+      updateData()
+    }
   }
 
   const onUpdateClick = () => {
