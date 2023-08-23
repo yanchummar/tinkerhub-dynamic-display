@@ -7,7 +7,7 @@ import { initializeApp } from 'firebase/app'
 import { getDatabase, ref, onValue } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDnQRXHWHOWVA_5Y8JJn7TEIVEnno8cQic",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "tinkerhub-dynamic-display.firebaseapp.com",
   databaseURL: "https://tinkerhub-dynamic-display-default-rtdb.asia-southeast1.firebasedatabase.app",
   projectId: "tinkerhub-dynamic-display",
